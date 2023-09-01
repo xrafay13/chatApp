@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Add from "../img/addAvatar.png";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
@@ -21,7 +25,18 @@ const Register = () => {
 
     try {
       //Create user
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      ).then((userCredential) => {
+        console.log("user created");
+        // send verification mail.
+        sendEmailVerification(userCredential.user);
+        auth.signOut();
+        alert("Email sent");
+      });
+      console.log("user created");
 
       //Create a unique image name
       const date = new Date().getTime();
@@ -54,6 +69,7 @@ const Register = () => {
         });
       });
     } catch (err) {
+      console.log(err);
       setErr(true);
       setLoading(false);
     }

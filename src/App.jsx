@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { AuthContextProvider } from "./context/AuthContext";
+import PhoneLogin from "./components/PhoneLogin";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -27,6 +28,7 @@ function App() {
 
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="phoneLogin" element={<PhoneLogin />} />
           </Route>
         </Routes>
       </BrowserRouter>

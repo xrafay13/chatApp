@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { Button } from "@mantine/core";
 
 const Login = () => {
   const [err, setErr] = useState(false);
@@ -28,6 +29,13 @@ const Login = () => {
           <input type="email" placeholder="email" />
           <input type="password" placeholder="password" />
           <button>Sign in</button>
+
+          <Link to="/phoneLogin">
+            <Button size="md" style={{ width: "20rem" }}>
+              Sign in with Phone
+            </Button>
+          </Link>
+
           {err && <span>Something went wrong</span>}
         </form>
         <p>
